@@ -11,15 +11,19 @@ body {
   font-family: 'Cairo', sans-serif, Arial, sans-serif;
   background-color: #0d1117;
   color: #c9d1d9;
-  line-height: 1.6;
+  line-height: 1.7;
+  min-height: 100vh;
 }
 
+/* روابط */
 a {
   color: #58a6ff;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 a:hover {
+  color: #ffa500;
   text-decoration: underline;
 }
 
@@ -27,7 +31,11 @@ a:hover {
   width: 90%;
   max-width: 900px;
   margin: auto;
-  padding: 40px 0;
+  padding: 50px 20px;
+  background: #161b22;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  margin-bottom: 40px;
 }
 
 /* Navbar */
@@ -37,84 +45,97 @@ a:hover {
   width: 100%;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.85);
 }
 
 .navbar .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 15px 20px;
 }
 
 .logo {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 1.9rem;
+  font-weight: 900;
   color: #58a6ff;
   text-decoration: none;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px #58a6ffaa;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 25px;
 }
 
 .nav-links li a {
-  font-size: 1rem;
-  padding: 6px 10px;
-  transition: background-color 0.3s ease;
-  border-radius: 5px;
+  font-size: 1.1rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-links li a:hover {
-  background-color: #238636;
-  color: white;
+  background: linear-gradient(90deg, #ffa500, #ff7300);
+  color: #fff;
+  box-shadow: 0 0 8px #ff8c00;
 }
 
 /* Hero Section */
 .hero {
   background: linear-gradient(90deg, #238636, #2ea043);
   text-align: center;
-  padding: 150px 20px 100px 20px;
+  padding: 180px 20px 120px 20px;
   color: white;
-  margin-top: 60px; /* to avoid navbar */
+  margin-top: 60px;
+  border-radius: 15px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 3.6rem;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px #27ae60;
 }
 
 .hero p {
-  font-size: 1.3rem;
-  margin-bottom: 30px;
+  font-size: 1.4rem;
+  margin-bottom: 35px;
+  text-shadow: 0 0 10px #2ecc71;
 }
 
 .btn {
-  background-color: #f78166;
+  background: linear-gradient(90deg, #f78166, #ff5823);
   color: white;
-  padding: 14px 30px;
-  border-radius: 10px;
-  font-size: 1.1rem;
+  padding: 16px 38px;
+  border-radius: 30px;
+  font-size: 1.2rem;
   text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-weight: 900;
+  box-shadow: 0 6px 18px rgba(247, 129, 102, 0.8);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
 .btn:hover {
-  background-color: #d65f00;
+  background: linear-gradient(90deg, #d65f00, #ff7f00);
+  box-shadow: 0 8px 25px rgba(214, 95, 0, 0.9);
 }
 
 /* Sections */
 section h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
+  font-size: 2.4rem;
+  margin-bottom: 25px;
   color: #58a6ff;
+  text-shadow: 0 0 8px #58a6ffcc;
 }
 
 .about p, .services ul, .join p, .contact ul {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #d0d7de;
 }
 
 .services ul, .contact ul {
@@ -123,29 +144,42 @@ section h2 {
 }
 
 .services ul li, .contact ul li {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  padding-left: 15px;
+  position: relative;
+  color: #a0b0c0;
+  font-weight: 600;
+}
+
+.services ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #2ea043;
+  font-weight: bold;
 }
 
 /* Footer */
 footer {
   background-color: #161b22;
   text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
+  padding: 25px;
+  font-size: 1rem;
   color: #8b949e;
-  margin-top: 40px;
+  margin-top: 50px;
+  border-top: 1px solid #30363d;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .nav-links {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     background-color: #161b22;
     position: fixed;
     right: 0;
     top: 60px;
-    width: 200px;
+    width: 220px;
     padding: 20px;
     display: none;
   }
