@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+body {
+  font-family: 'Cairo', sans-serif, Arial, sans-serif;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  line-height: 1.6;
+}
+
+a {
+  color: #58a6ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 0;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #161b22;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #58a6ff;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  font-size: 1rem;
+  padding: 6px 10px;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.nav-links li a:hover {
+  background-color: #238636;
+  color: white;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(90deg, #238636, #2ea043);
+  text-align: center;
+  padding: 150px 20px 100px 20px;
+  color: white;
+  margin-top: 60px; /* to avoid navbar */
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #f78166;
+  color: white;
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #d65f00;
+}
+
+/* Sections */
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #58a6ff;
+}
+
+.about p, .services ul, .join p, .contact ul {
+  font-size: 1.1rem;
+}
+
+.services ul, .contact ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.services ul li, .contact ul li {
+  margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+  background-color: #161b22;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #8b949e;
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    background-color: #161b22;
+    position: fixed;
+    right: 0;
+    top: 60px;
+    width: 200px;
+    padding: 20px;
+    display: none;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+}
