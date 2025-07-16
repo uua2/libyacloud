@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دفتر ذكاء</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background-color: #0e0e0e;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #00c3ff;
+      animation: fadeInDown 1s ease-out forwards;
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin: 20px 0 40px;
+      color: #cccccc;
+      animation: fadeIn 2s ease-out forwards;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 300px;
+      animation: fadeInUp 2s ease-out forwards;
+    }
+
+    button, a {
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      background: linear-gradient(90deg, #00c3ff, #3a8bff);
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover, a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00c3ff80;
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (min-width: 600px) {
+      .buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>📘 دفتر ذكاء</h1>
+  <p>"دع يومك يبدأ بنية طيبة وأفكار واضحة."</p>
+
+  <div class="buttons">
+    <button onclick="location.href='ideas.html'">💡 أفكاري</button>
+    <button onclick="location.href='goals.html'">🎯 أهدافي</button>
+  </div>
+
+  <script>
+    // إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHvHVsinixqr80g1DQb5rY4yeZjMgKZuM",
+      authDomain: "osama-25f67.firebaseapp.com",
+      projectId: "osama-25f67",
+      storageBucket: "osama-25f67.appspot.com",
+      messagingSenderId: "568553060391",
+      appId: "1:568553060391:web:0cc0d795304cb1c02bb602",
+      measurementId: "G-R26JVT9HCT"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // التحقق إذا المستخدم غير مسجل دخول → يتم تحويله إلى login.html
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      } else {
+        console.log("مرحباً، " + user.displayName);
+      }
+    });
+  </script>
+</body>
+</html>

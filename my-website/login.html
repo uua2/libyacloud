@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: 'Cairo', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #00c3ff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>👋 تسجيل الدخول بحساب Google</h1>
+  <button onclick="signInWithGoogle()">🔐 تسجيل الدخول</button>
+
+  <script>
+    // إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHvHVsinixqr80g1DQb5rY4yeZjMgKZuM",
+      authDomain: "osama-25f67.firebaseapp.com",
+      projectId: "osama-25f67",
+      storageBucket: "osama-25f67.appspot.com",
+      messagingSenderId: "568553060391",
+      appId: "1:568553060391:web:0cc0d795304cb1c02bb602",
+      measurementId: "G-R26JVT9HCT"
+    };
+
+    // تهيئة Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    // إذا كان المستخدم مسجّل مسبقاً → أرسله للصفحة الرئيسية
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    function signInWithGoogle() {
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("خطأ في تسجيل الدخول: " + error.message);
+        });
+    }
+  </script>
+
+</body>
+</html>

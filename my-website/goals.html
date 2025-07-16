@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>أهدافي</title>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #ffffff;
+      font-family: 'Cairo', sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ff88;
+      font-size: 2.5rem;
+      animation: fadeInDown 1s ease-out forwards;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background-color: #1a1a1a;
+      color: white;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: linear-gradient(90deg, #00ff88, #00c38c);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .goal {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .goal h3 {
+      margin: 0 0 10px;
+      color: #00ff88;
+    }
+
+    .progress {
+      background-color: #444;
+      border-radius: 5px;
+      overflow: hidden;
+      height: 15px;
+      margin-top: 5px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: #00ff88;
+      width: 0%;
+      transition: width 0.5s ease-in-out;
+    }
+
+    a {
+      color: #aaa;
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #00ff88;
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 أهدافي</h1>
+
+  <input type="text" id="goalTitle" placeholder="عنوان الهدف" />
+  <textarea id="goalSteps" placeholder="ما هي الخطوات لتحقيق هذا الهدف؟"></textarea>
+  <input type="number" id="goalProgress" placeholder="نسبة التقدم (مثلاً: 50)" min="0" max="100" />
+
+  <button onclick="addGoal()">✅ أضف الهدف</button>
+  <button onclick="clearGoals()">🗑️ مسح الأهداف</button>
+
+  <div id="goalList"></div>
+
+  <a href="index.html">⬅️ العودة للرئيسية</a>
+
+  <script>
+    const goalList = document.getElementById("goalList");
+
+    function loadGoals() {
+      const saved = localStorage.getItem("goals");
+      if (saved) {
+        goalList.innerHTML = saved;
+        updateBars();
+      }
+    }
+
+    function addGoal() {
+      const title = document.getElementById("goalTitle").value.trim();
+      const steps = document.getElementById("goalSteps").value.trim();
+      const progress = parseInt(document.getElementById("goalProgress").value);
+
+      if (!title || !steps || isNaN(progress)) {
+        alert("يرجى تعبئة جميع الحقول.");
+        return;
+      }
+
+      const goalDiv = document.createElement("div");
+      goalDiv.className = "goal";
+      goalDiv.innerHTML = `
+        <h3>🎯 ${title}</h3>
+        <p>${steps}</p>
+        <div class="progress">
+          <div class="progress-bar" style="width:${progress}%"></div>
+        </div>
+        <p>التقدم: ${progress}%</p>
+      `;
+
+      goalList.appendChild(goalDiv);
+      saveGoals();
+      clearInputs();
+    }
+
+    function saveGoals() {
+      localStorage.setItem("goals", goalList.innerHTML);
+    }
+
+    function clearGoals() {
+      if (confirm("هل أنت متأكد من مسح جميع الأهداف؟")) {
+        goalList.innerHTML = "";
+        localStorage.removeItem("goals");
+      }
+    }
+
+    function clearInputs() {
+      document.getElementById("goalTitle").value = "";
+      document.getElementById("goalSteps").value = "";
+      document.getElementById("goalProgress").value = "";
+    }
+
+    function updateBars() {
+      const bars = document.querySelectorAll(".progress-bar");
+      bars.forEach(bar => {
+        bar.style.width = bar.style.width; // refresh
+      });
+    }
+
+    window.onload = loadGoals;
+  </script>
+</body>
+</html>

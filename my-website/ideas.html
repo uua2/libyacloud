@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>أفكاري</title>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #ffffff;
+      font-family: 'Cairo', sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffd700;
+      font-size: 2.5rem;
+      animation: fadeInDown 1s ease-out forwards;
+    }
+
+    textarea {
+      width: 100%;
+      height: 180px;
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      color: #ffffff;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 10px;
+      margin: 20px 0;
+      resize: none;
+      animation: fadeIn 2s ease-out forwards;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      animation: fadeInUp 2s ease-out forwards;
+    }
+
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: linear-gradient(90deg, #ffb700, #ff8800);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .suggestion-box {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border: 1px solid #333;
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    a {
+      color: #aaa;
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #ffd700;
+    }
+
+    .loading {
+      color: #ccc;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💡 أفكاري</h1>
+  <textarea id="idea" placeholder="اكتب فكرتك أو مشروعك هنا..."></textarea>
+
+  <div class="buttons">
+    <button onclick="saveIdea()">💾 حفظ الفكرة</button>
+    <button onclick="clearIdea()">🗑️ مسح</button>
+    <button onclick="getAIHelp()">🤖 اسأل سِنا عن فكرتك</button>
+  </div>
+
+  <div class="suggestion-box" id="suggestionBox"></div>
+  <div class="loading" id="loading"></div>
+
+  <a href="index.html">⬅️ العودة للرئيسية</a>
+
+  <script>
+    window.onload = () => {
+      const idea = localStorage.getItem("myIdea");
+      if (idea) {
+        document.getElementById("idea").value = idea;
+      }
+    };
+
+    function saveIdea() {
+      const idea = document.getElementById("idea").value;
+      localStorage.setItem("myIdea", idea);
+      alert("✅ تم حفظ الفكرة.");
+    }
+
+    function clearIdea() {
+      document.getElementById("idea").value = "";
+      document.getElementById("suggestionBox").innerHTML = "";
+      localStorage.removeItem("myIdea");
+    }
+
+    function suggestImprovement() {
+      const suggestions = [
+        "🔧 يمكنك تحويل هذه الفكرة إلى تطبيق ويب بسيط باستخدام HTML/CSS/JS.",
+        "🚀 فكر كيف يمكن أن تساعد هذه الفكرة الآخرين، وأضف قيمة واضحة.",
+        "🧠 ضع خطة مكونة من 3 خطوات صغيرة لبدء تنفيذ الفكرة.",
+        "📦 هل يمكنك جعلها مشروع مفتوح المصدر ليستفيد غيرك؟",
+        "🌍 فكّر في جمهور الفكرة: من سيستخدمها؟ وكيف تصل إليهم؟"
+      ];
+      const random = suggestions[Math.floor(Math.random() * suggestions.length)];
+      document.getElementById("suggestionBox").innerHTML = random;
+    }
+
+    async function getAIHelp() {
+      const idea = document.getElementById("idea").value.trim();
+      if (!idea) {
+        alert("📝 الرجاء كتابة فكرة أولاً.");
+        return;
+      }
+
+      document.getElementById("loading").innerText = "⏳ جاري التفكير...";
+
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer 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" // 🔑 استبدل هذا بمفتاحك الحقيقي
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "أنت مساعد ذكي مبدع يتحدث العربية، يساعد المستخدم في تطوير أفكاره ومشاريعه بأسلوب بسيط وعملي."
+            },
+            {
+              role: "user",
+              content: `لدي هذه الفكرة: ${idea}. كيف يمكنني تطويرها؟`
+            }
+          ]
+        })
+      });
+
+      const data = await response.json();
+      const reply = data.choices?.[0]?.message?.content || "❌ لم أتمكن من الرد. تأكد من صحة المفتاح.";
+
+      document.getElementById("suggestionBox").innerText = reply;
+      document.getElementById("loading").innerText = "";
+    }
+  </script>
+</body>
+</html>
